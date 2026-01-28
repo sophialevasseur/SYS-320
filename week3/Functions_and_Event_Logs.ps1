@@ -76,3 +76,42 @@ function Get-LoginLogoffEvents {
     
     return $loginoutsTable
 }
+
+
+# Create another function to obtain computer start and shut-down times
+function Get-StartupShutdownEvents {
+    param(
+        [int]$Days = 14
+    )
+    
+    # Get startup and shutdown records from Windows System Events
+    # EventID 6005 or 6009 = Startup, EventID 6006 = Shutdown
+    $events = Get-EventLog -LogName System -After (Get-Date).AddDays(-$Days) | Where-Object {$_.EventID -in @(6005, 6006, 6009)}
+    
+    # Create an empty array to store custom objects
+    $eventsTable = @()
+    
+    # Loop through each event
+    for($i=0; $i -lt $events.Count; $i++){
+        
+        # Determine whether it is a startup or shutdown
+        $event = ""
+        if($events[$i].EventId -eq 6005) {$event="Startup"}
+        if($events[$i].EventId -eq 6009) {$event="Startup"}
+        if($events[$i].EventId -eq 6006) {$event="Shutdown"}
+        
+        # User is always "System" for these events
+        $user = "System"
+        
+        # Add 4 properties to the array
+        $eventsTable += [PSCustomObject]@{
+            "Time" = $events[$i].TimeGenerated
+            "Id" = $events[$i].EventId
+            "Event" = $event
+            "User" = $user
+        }
+    }
+    
+    # Return the table
+    return $eventsTable
+}
