@@ -1,4 +1,1 @@
-Get-Process |
-    Where-Object { $_.ProcessName -like 'C*' } |
-    Sort-Object ProcessName |
-    Select-Object ProcessName, Id, CPU, WS
+Get-Process | Where {$_.ProcessName -like "C*"}
