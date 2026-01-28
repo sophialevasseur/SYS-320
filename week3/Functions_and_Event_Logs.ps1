@@ -28,7 +28,6 @@ for($i=0; $i -lt $loginouts.Count; $i++){
         $objSID = New-Object System.Security.Principal.SecurityIdentifier($sid)
         $user = $objSID.Translate([System.Security.Principal.NTAccount]).Value
     } catch {
-        # If translation fails, just use the SID
         $user = $sid
     }
     
