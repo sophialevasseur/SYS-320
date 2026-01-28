@@ -1,5 +1,9 @@
-if (Get-Process chrome -ErrorAction SilentlyContinue) {
-    Stop-Process chrome
+$chrome = Get-Process -Name "chrome" -ErrorAction SilentlyContinue
+
+if ($null -eq $chrome) {
+    Start-Process "chrome.exe" "https://www.champlain.edu"
+    "Chrome was not running -> started and opened Champlain.edu"
 } else {
-    Start-Process chrome "https://www.champlain.edu"
+    Stop-Process -Name "chrome" -Force
+    "Chrome was running -> stopped all Chrome processes"
 }
