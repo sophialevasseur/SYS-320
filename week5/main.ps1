@@ -3,7 +3,7 @@
 
 # Deliverable 1: Call your function from a main.ps1 file. Your function should be in a different file than the main.ps1 file and should be accessed with dot notation. 
 Write-Host "=== ALL LOGS ===" -ForegroundColor Green
-$allLogs = Apache_log_parser -LogFile "access.log"
+$allLogs = Apache_log_parser.ps1-LogFile "access.log"
 $allLogs | Format-Table IP, Page, Referrer, Status -AutoSize
 
 # Deliverable 2: Call your function from a main.ps1 file again, and use a Where-Object query on the results this time to get logs, such that the "Page" value should contain "page2.html" and and "Referrer" value should contain "index.html"
