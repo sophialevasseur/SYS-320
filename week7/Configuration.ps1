@@ -2,18 +2,21 @@ clear
 
 # For Option 1 - Read Configuration Function (configuration should be displayed as pscustomobject): 
 function readConfiguration() {
-    $showFirstLine = Get-Content -Path C:\Users\champuser\SYS-320\week7\configuration.txt -First 1
-    $showSecondLine = Get-Content -Path C:\Users\champuser\SYS-320\week7\configuration.txt -Second 2
+    $show = Get-Content -Path C:\Users\champuser\SYS-320\week7\configuration.txt 
         $display = @()
-        $display += [pscustomobject]@{"Number of Days" = "$showFirstLine" 
-                                      "Execution Time" = "$showSecondLine"
+        $display += [pscustomobject]@{"Number of Days" = $show[0] 
+                                      "Execution Time" = $show[1]
                                       }
-        return $display
+        return $display 
     }
 # For Option 2 - Change Configuration Function (This option will ask the user for new configuration and replace the old configuration with new): 
-function changeConfiguration($change) {
-    $changeFirstLine = (Get-Content -Path C:\Users\champuser\SYS-320\week7\configuration.txt) -replace -
-    $changeSecondLine = (Get-Content -Path C:\Users\champuser\SYS-320\week7\configuration.txt)
+function changeConfiguration() {
+    
+    $days = Read-Host "Enter a number of days:"
+    $time = Read-Host "Enter a time: "
+    $days | Out-File -FilePath C:\Users\champuser\SYS-320\week7\configuration.txt
+    $time | Out-File -FilePath C:\Users\champuser\SYS-320\week7\configuration.txt -Append
+
     }
 
 # Menu Config Function: 
@@ -25,6 +28,7 @@ $Prompt += "1 - Show Configuration`n"
 $Prompt += "2 - Change Configuration`n"
 $Prompt += "3 - Exit`n"
 $operation = $true
+
 
 while($operation){
 
@@ -40,11 +44,13 @@ while($operation){
 # Prompt 1 Code: Show configuration 
     elseif($choice -eq 1){
         $show = readConfiguration
-        Write-Host $show
+        Write-Host ($show | Format-Table | Out-String)
     }
 
 # Prompt 2 Code: Change Configuration
     elseif($choice -eq 2){
-        return $change  
+        changeConfiguration
     }
     }
+    }
+configurationMenu
