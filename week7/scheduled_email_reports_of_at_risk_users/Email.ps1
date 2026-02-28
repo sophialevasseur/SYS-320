@@ -1,7 +1,7 @@
 function SendAlertEmail($Body){
 
-$From = "sophia.levasseur@mymail.champlain.edu"
-$To = "sophia.levasseur@mymail.champlain.edu"
+$From = "Add-Champ-Email"
+$To = "Add-Champ-Email"
 $Subject = "Suspicious Activity"
 
 $Password = "INSERT-YOUR-GENERATED-PASSWORD" | ConvertTo-SecureString -AsPlainText -Force
@@ -11,3 +11,5 @@ Send-MailMessage -From $From -To $To -Subject $Subject -Body $Body -SmtpServer "
 -port 587 -UseSsl -Credential $Credential
 
 }
+
+SendAlertEmail "Body of email"
