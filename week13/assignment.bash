@@ -6,19 +6,28 @@ link="10.0.17.6/Assignment.html"
 # get the website with curl and tell curl not to give errors
 fullPage=$(curl -sL "$link")
 
-# Utilizing xmlstarlet tool to extract table from the page
-toolOutput=$(echo "$fullPage" | \
-xmlstarlet format --html --recover 2>/dev/null | \
-xmlstarlet select --template --copy-of \
-"//html//body//div//table//tr")
+tempdata=$(echo "$fullPage" | \
+xmlstarlet select --template --value-of \
+"//table[@id='temp']//tr//td" | awk 'NR %2 == 1' )
 
-# Processing HTML with sed
-# 1- Replacing every </tr> with a line break
-echo "$toolOutput" | sed 's/<\/tr>/\n/g' | \
-                     sed -e 's/&amp;//g' | \
-                     sed -e 's/<tr>//g' | \
-                     sed -e 's/<td[^>]*>//g' | \
-                     sed -e 's/<\/td>/;/g' | \
-                     sed -e 's/<[/\]\{0,1\}a[^>]*>//g' | \
-                     sed -e 's/<[/\]\{0,1\}nobr>//g' \
-	     > assignment.txt
+pressuredata=$(echo "$fullPage" | \
+xmlstarlet select --template --value-of \
+"//table[@id='press']//tr//td" | awk 'NR %2 == 1' )
+
+timedata=$(echo "$fullPage" | \
+xmlstarlet select --template --value-of \
+"//table[@id='temp']//tr//td[2]")
+
+#linecount=$(echo "$tempdata" | wc -1 )
+
+for (( sed 's/ / | /g' ));
+do
+	echo "Here is deliverable 1!"
+
+	temp=$(echo "$tempdata" | head -n $i | tail -n 1 )
+	pressure=$(echo "$pressuredata" | head -n $i | tail -n 1 )
+	times=$(echo "$timedata" | head -n $i | tail -n 1 )
+
+	echo -e "$temp $pressure $times"
+
+done
