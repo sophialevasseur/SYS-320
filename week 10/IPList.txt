@@ -1,0 +1,14 @@
+# DELIVERABLE 1:
+# STUDENT NOTE: Line 1 tells the system to run this script with a >
+# STUDENT NOTE: [ $# -NE 1 ] ---> Tests if the number of arguments>
+# STUDENT NOTE: && - exit 1 ---> These lines and the code between >
+# STUDENT NOTE: Line 13 stores the first (and only) argument into >
+# STUDENT NOTE: (COntinued) in a call such as (bash IPList.bash 10>
+# STUDENT NOTE: line 18 iterates i from 1 to 254, which are the us>
+# STUDENT NOTE: THis will print each full IP (1-254) 
+
+#DELIVERABLE 2: 
+# Note: prefix=$1 --> takes the first argument to the script and stores it in the variable prefix
+# NOte: ${#prefix} --> Expands to the length of the string stored in prefix
+# NOte: [ ${#prefix} -lt 5 ] --> uses the test command to check if the length of the prefix is less than 5
+# NOte: && \ --> line continuation style

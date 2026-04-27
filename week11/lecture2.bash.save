@@ -1,0 +1,15 @@
+ GNU nano 6.2                      lecture.bash                                
+ 1 #! /bin/bash
+ 2
+ 3 function pageCount() {
+ 4 file="/var/log/apache2/access.log"
+ 5
+ 6 results=$(cat "$file" | cut -d' ' -f7 | sort -n | uniq -c)
+ 7
+ 8 echo "$results"
+ 9
+10 }
+11
+12 pageCount
+13
+

@@ -1,0 +1,6 @@
+To: sophia.levasseur@mymail.champlain.edu
+Subject: Failed Logins
+Here are the failed login attempts:
+pam_unix(lightdm:auth):
+pam_unix(lightdm:auth):
+pam_unix(lightdm:auth):
