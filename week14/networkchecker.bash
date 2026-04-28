@@ -4,7 +4,20 @@ myIP=$(bash myIP.bash)
 
 
 # Todo-1: Create a helpmenu function that prints help for the script
-
+function helpMenu() {
+	echo ""
+	echo "    help menu    "
+	echo "-----------------"
+	echo "-n: add -n as an argument for this script to use nmap"
+	echo "  -n external: External NMAP scan"
+	echo "  -n internal: Internal NMAP scan"
+	echo "-s: add -s as an argument for this script to use ss"
+	echo "  -s external: External ss(netstat) scan" 
+	echo "  -s internal: Internal ss(netstat) scan"
+	echo ""
+	echo "usage: ./networkchecker.bash <-n>/<-s> <external>/<internal>"
+	echo "-----------------"
+}
 
 # Return ports that are serving to the network
 function ExternalNmap(){
@@ -22,7 +35,10 @@ function ExternalListeningPorts(){
 
 # Todo-2: Complete the ExternalListeningPorts that will print the port and application
 # that is listening on that port from network (using ss utility)
-
+  
+  externalPort=$(ss -ltpn | awk -F"[[:space:]:(),]+" '/'$myIP'/ {print $5,$9}' | tr -d "\"")
+	  echo "$externalPort"
+    
 }
 
 
@@ -34,6 +50,12 @@ ilpo=$(ss -ltpn | awk  -F"[[:space:]:(),]+" '/127.0.0./ {print $5,$9}' | tr -d "
 
 
 # Todo-3: If the program is not taking exactly 2 arguments, print helpmenu
+
+if [ ! ${#} -eq 2 ]; then
+	helpMenu
+
+	exit 1
+fi
 
 # Todo-4: Use getopts to accept options -n and -s (both will have an argument)
 # If the argument is not internal or external, call helpmenu
